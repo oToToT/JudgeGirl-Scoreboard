@@ -3,7 +3,7 @@ if(!isset($_GET['cid'])){
     die('cid needed');
 }
 header('Content-type: application/json;');
-$submissions = json_decode(exec('./crawler.py '.escapeshellarg($_GET['cid'])));
+$submissions = json_decode(exec('python3 crawler.py '.escapeshellarg($_GET['cid'])));
 
 $res2text = ['running', 'ce', 'ole', 'mle', 're', 'tle', 'wa', 'ac', 'uploading', 'pe'];
 
