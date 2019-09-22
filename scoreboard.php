@@ -9,7 +9,7 @@ if(!isset($_GET['end'])){
 <!DOCTYPE html>
 <html lang="zh_TW">
 <head>
-<title>JudgeGirl ScoreBoard</title>
+<title>JudgeGirl Scoreboard</title>
 <meta charset='utf-8'>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href='https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.3/tocas.css' rel='stylesheet' type='text/css'>
@@ -31,7 +31,7 @@ if(!isset($_GET['end'])){
 <body>
     <div class="ts inverted fluid top attached link basic menu navmenu">
         <div class="ts narrow container"><a class="item router-link-active" href="./">JudgeGirl Scoreboard</a>
-            <div class="right menu"><a class="item" href="https://github.com/oToToT/JGSB">Github</a></div>
+            <div class="right menu"><a class="item" href="https://github.com/oToToT/JudgeGirl-Scoreboard">Github</a></div>
         </div>
     </div>
     <div class="ts fluid vertically very padded heading borderless slate">
