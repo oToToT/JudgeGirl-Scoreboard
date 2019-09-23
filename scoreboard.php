@@ -41,7 +41,7 @@ if(!isset($_GET['end'])){
                 <div class="label">submissions</div>
             </div>
             <div class="secondary statistic">
-                <div class="value">{{Math.ceil((<?= $_GET['end'] ?>-last_update)/60000*10)/10}}</div>
+                <div class="value">{{Math.max(0, Math.ceil((<?= $_GET['end'] ?>-last_update)/60000*10)/10)}}</div>
                 <div class="label">mins left</div>
             </div>
             <div class="positive statistic">
@@ -93,6 +93,15 @@ if(!isset($_GET['end'])){
                 <td class="center aligned" v-for="score in user.scores" v-bind:class="{positive: score==100, error: score==0}">{{score}}</td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr v-if="users.length!=0">
+                <th class="right aligned" colspan="4">Average Trials to AC / Average Score / Number of AC Users</th>
+                <th class="center aligned" v-for="problem in problems">{{Math.ceil(problem.ac_trials/problem.total_users*100)/100}} / {{Math.ceil(problem.total_score/problem.total_users*100)/100}} / {{problem.ac_users}}</th>
+            </tr>
+            <tr v-else="v-else">
+                <th class="center aligned" colspan="4">No Submissions!</th>
+            </tr>
+        </tfoot>
     </table>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
