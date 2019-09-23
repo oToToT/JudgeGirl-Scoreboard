@@ -1,7 +1,12 @@
 <?php
 if(!isset($_GET['cid'])){
-    die('cid needed');
+    die('cid required');
 }
+$user_info = array();
+if(file_exists('./student_info.php')){
+    require './student_info.php';
+}
+
 header('Content-type: application/json;');
 $submissions = json_decode(exec('python3 crawler.py '.escapeshellarg($_GET['cid'])));
 
@@ -59,6 +64,8 @@ foreach($users as $user){
         if(!$score) $score = 0;
         $user['scores'][$problem2id[$pid]]=$score;
     }
+    if(isset($user_info[$user['uid']]))
+        $user['uid'] = $user_info[$user['uid']];
     array_push($parsed['users'], $user);
 }
 
