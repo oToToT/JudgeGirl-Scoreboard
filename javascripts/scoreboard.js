@@ -72,13 +72,13 @@ function render(cid) {
 
         let sort_key = scoreboard.sorting.key;
         if (typeof sort_key === "string") {
-            scoreboard.users.sort(function(a, b) {
+            users.sort(function(a, b) {
                 if (a[sort_key] < b[sort_key]) return -1 * scoreboard.sorting.state;
                 if (a[sort_key] > b[sort_key]) return 1 * scoreboard.sorting.state;
                 return 0;
             });
         } else if (typeof sort_key === "number") {
-            scoreboard.users.sort(function(a, b) {
+            users.sort(function(a, b) {
                 return (a.scores[sort_key] - b.scores[sort_key]) * scoreboard.sorting.state;
             });
         }
