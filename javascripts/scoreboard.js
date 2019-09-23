@@ -39,21 +39,6 @@ let scoreboard = new Vue({
                     return (a.scores[key] - b.scores[key]) * that.sorting.state;
                 });
             }
-        },
-        make_sorted: function() {
-            if(typeof this.sorting.key === 'undefined') return;
-            let that = this, key = this.sorting.key;
-            if (typeof key === "string") {
-                this.users.sort(function(a, b) {
-                    if (a[key] < b[key]) return -1 * that.sorting.state;
-                    if (a[key] > b[key]) return 1 * that.sorting.state;
-                    return 0;
-                });
-            } else if (typeof key === "number") {
-                this.users.sort(function(a, b) {
-                    return (a.scores[key] - b.scores[key]) * that.sorting.state;
-                });
-            }
         }
     }
 });
@@ -99,6 +84,5 @@ function render(cid) {
         }
 
         scoreboard.users = users;
-        scoreboard.make_sorted();
     });
 }
