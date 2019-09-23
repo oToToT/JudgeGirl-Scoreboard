@@ -37,8 +37,10 @@ foreach($users as $user){
     $user['score'] = array_sum($user['scores']);
     $tmp = $user['scores'];
     unset($user['scores']);
-    foreach($tmp as $pid=>$score)
+    foreach($tmp as $pid=>$score){
+        if(!$score) $score = 0;
         $user['scores'][$problem2id[$pid]]=$score;
+    }
     array_push($parsed['users'], $user);
 }
 
