@@ -96,7 +96,7 @@ if(!isset($_GET['end'])){
         <tfoot>
             <tr v-if="users.length!=0">
                 <th class="right aligned" colspan="4">Average Trials to AC / Average Score / Number of AC Users</th>
-                <th class="center aligned" v-for="problem in problems">{{Math.ceil(problem.ac_trials/problem.total_users*100)/100}} / {{Math.ceil(problem.total_score/problem.total_users*100)/100}} / {{problem.ac_users}}</th>
+                <th class="center aligned" v-for="problem in problems">{{problem.ac_users == 0 ? "No AC" : Math.ceil(problem.ac_trials/problem.ac_users*100)/100}} / {{Math.ceil(problem.total_score/problem.total_users*100)/100}} / {{problem.ac_users}}</th>
             </tr>
             <tr v-else="v-else">
                 <th class="center aligned" colspan="4">No Submissions!</th>
