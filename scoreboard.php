@@ -29,7 +29,7 @@ if(!isset($_GET['end'])){
 </style>
 </head>
 <body>
-    <div class="ts active inverted dimmer" id="dimmer">
+    <div class="ts active dimmer" id="dimmer">
         <div class="ts text loader">載入中</div>
     </div>
     <div class="ts inverted fluid top attached link basic menu navmenu">
