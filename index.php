@@ -5,7 +5,7 @@
 <meta charset='utf-8'>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href='https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.3/tocas.css' rel='stylesheet' type='text/css'>
-<link href="stylesheets/tail.datetime-default-blue.min.css" rel='stylesheet' type='text/css'>
+<link href="stylesheets/flatpickr.min.css" rel='stylesheet' type='text/css'>
 <link href="stylesheets/index.css" rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -26,7 +26,7 @@ of Simple CSS Waves-->
       </div>
       <div class="field">
         <label>End Time:</label>
-        <input type="text" class="tail-datetime-field" name="end" id="end">
+        <input type="text" class="flatpickr" name="end" id="end">
       </div>
       <input type="submit" class="ts button" value="Get!"/>
     </form>
@@ -58,13 +58,14 @@ of Simple CSS Waves-->
 </div>
 <!--Content ends-->
 </body>
-<script src="javascripts/tail.datetime.min.js"></script>
+<script src="javascripts/moment.min.js"></script>
+<script src="javascripts/flatpickr.min.js"></script>
 <script>
-tail.DateTime(".tail-datetime-field");
+flatpickr(".flatpickr", {enableTime: true});
 document.getElementById('form').addEventListener('submit',function(e){
   e.preventDefault();
-  let d = new Date(document.getElementById("end").value);
-  document.getElementById("end").value = d.getTime();
+  let d = moment(document.getElementById("end").value);
+  document.getElementById("end").value = d.valueOf();
   this.submit();
 });
 </script>
