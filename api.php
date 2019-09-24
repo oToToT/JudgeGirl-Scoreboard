@@ -50,6 +50,7 @@ $problem2id = array();
 $parsed['problems'] = array();
 foreach($problems as $id => $data){
     $problem2id[$id] = count($parsed['problems']);
+    if(!$data['ac_trials']) $data['ac_trials'] = 0;
     $data['ac_users'] = count($data['ac_users']);
     $data['total_users'] = count($data['total_users']);
     array_push($parsed['problems'], $data);
