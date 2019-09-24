@@ -84,5 +84,6 @@ function render(cid) {
         }
 
         scoreboard.users = users;
+        document.getElementById('dimmer').style.display = 'none';
     });
 }
