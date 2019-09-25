@@ -37,5 +37,8 @@ To customize display name, you should add a file called `student_info.php` and d
 
 ## Special Thanks ##
 
-Thanks @brianbbsu for the `crawler.py`. Without his first attempt, I won't start this project.
+Thanks [@brianbbsu](https://github.com/brianbbsu) for the `crawler.py`.
+
+Without his first attempt, I won't start this project.
+
 Also, thanks those who have make suggestion for me.
