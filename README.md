@@ -33,7 +33,9 @@ First of all, check you have Python with version >= 3 and PHP
 
 then `git clone https://github.com/oToToT/JudgeGirl-Scoreboard.git`, now those source code will be cloned into JudgeGirl-Scoreboard.
 
-To customize display name, you should add a file called `student_info.php` and define a array called `user_info` which stores a mapping from uid to what you want to display.
+To customize display name, you should modify `student_info.example.php` which stores a mapping from uid to what you want to display.
+
+After that, you should rename it to `student_info.php`.
 
 ## Special Thanks ##
 
