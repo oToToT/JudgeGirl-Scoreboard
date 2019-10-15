@@ -44,7 +44,7 @@ if(!isset($_GET['end'])){
                 <div class="label">submissions</div>
             </div>
             <div class="secondary statistic">
-                <div class="value">{{Math.max(0, Math.ceil((<?= $_GET['end'] ?>-last_update)/60000*10)/10)}}</div>
+                <div class="value">{{Math.max(0, Math.ceil((<?= htmlspecialchars($_GET['end']) ?>-last_update)/60000*10)/10)}}</div>
                 <div class="label">mins left</div>
             </div>
             <div class="positive statistic">
@@ -112,7 +112,7 @@ if(!isset($_GET['end'])){
     <script>
         scoreboard.sorting.key = 'score';
         scoreboard.sorting.state = -1;
-        setInterval(()=>render(<?= $_GET['cid'] ?>), 2500);
+        setInterval(()=>render(<?= htmlspecialchars($_GET['cid']) ?>), 2500);
     </script>
 </body>
 </html>
