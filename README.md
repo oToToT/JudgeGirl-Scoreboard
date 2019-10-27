@@ -43,4 +43,6 @@ Thanks [@brianbbsu](https://github.com/brianbbsu) for the `crawler.py`.
 
 Without his first attempt, I won't start this project.
 
+Thanks [@bluemorbo](https://github.com/bluemorbo) for adding some XSS protection.
+
 Also, thanks those who have make suggestion for me.
