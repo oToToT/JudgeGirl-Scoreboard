@@ -1,12 +1,12 @@
 <?php
 if(!isset($_GET['cid'])){
-    die('cid needed');
+    die('cid required');
 }
 if(!filter_var($_GET['cid'], FILTER_VALIDATE_INT)){
     die('Invalid cid');
 }
 if(!isset($_GET['end'])){
-    die('end needed');
+    die('end required');
 }
 if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
     die('Invalid end');

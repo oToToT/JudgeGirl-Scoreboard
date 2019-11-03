@@ -2,6 +2,9 @@
 if(!isset($_GET['cid'])){
     die('cid required');
 }
+if(!filter_var($_GET['cid'], FILTER_VALIDATE_INT)){
+    die('Invalid cid');
+}
 // include student_info.php
 $user_info = array();
 if(file_exists('./student_info.php')){
