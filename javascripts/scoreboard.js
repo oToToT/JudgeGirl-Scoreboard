@@ -85,5 +85,8 @@ function render(cid) {
 
         scoreboard.users = users;
         document.getElementById('dimmer').style.display = 'none';
+        setTimeout(()=>render(cid), 100);
+    }).catch(function(e){
+        render(cid);
     });
 }

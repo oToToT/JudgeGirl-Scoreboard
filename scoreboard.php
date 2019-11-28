@@ -118,7 +118,7 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
     <script>
         scoreboard.sorting.key = 'score';
         scoreboard.sorting.state = -1;
-        setInterval(()=>render(<?= htmlspecialchars($_GET['cid']) ?>), 2500);
+        render(<?= $_GET['cid'] ?>);
     </script>
 </body>
 </html>
