@@ -31,7 +31,9 @@ You can change the display name (e.g. add users' name after his uid) simply.
 
 First of all, check you have Python with version >= 3 and PHP
 
-then `git clone https://github.com/oToToT/JudgeGirl-Scoreboard.git`, now those source code will be cloned into JudgeGirl-Scoreboard.
+Then `git clone https://github.com/oToToT/JudgeGirl-Scoreboard.git`, now those source code will be cloned into JudgeGirl-Scoreboard.
+
+Edit `URL_BASE` to the url of your website and `TMP_PATH` to the path which could store a temp file in  `config.example.php` and rename it to `config.php`.
 
 To customize display name, you should modify `student_info.example.php` which stores a mapping from uid to what you want to display.
 

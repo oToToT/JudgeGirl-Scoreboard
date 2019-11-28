@@ -1,15 +1,20 @@
 <?php
+require 'config.php';
 if(!isset($_GET['cid'])){
-    die('cid required');
+    header('Location: '.URL_BASE.'?error_msg=Contest%20ID%20is%20required.');
+    die();
 }
 if(!filter_var($_GET['cid'], FILTER_VALIDATE_INT)){
-    die('Invalid cid');
+    header('Location: '.URL_BASE.'?error_msg=Invalid%20Contest%20ID.');
+    die();
 }
 if(!isset($_GET['end'])){
-    die('end required');
+    header('Location: '.URL_BASE.'?error_msg=End%20Time%20is%20required.');
+    die();
 }
 if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
-    die('Invalid end');
+    header('Location: '.URL_BASE.'?error_msg=Invalid%20End%20Time.');
+    die();
 }
 ?>
 <!DOCTYPE html>

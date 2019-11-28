@@ -10,10 +10,18 @@
 </head>
 <body>
     <!--Hey! This is the original version of Simple CSS Waves-->
-    <div class="header">
+    <div class="wave header">
         <!--Content before waves-->
-        <div class="inner-header flex">
+        <div class="wave inner-header flex">
             <div>
+                <?php
+if(isset($_GET['error_msg'])) {
+?>
+                <div class="ts negative message">
+                    <div class="header">Oops! Something went wrong.</div>
+                    <p><?= htmlspecialchars($_GET['error_msg']); ?></p>
+                </div>
+<?php } ?>
                 <h1 class="unstyled">JudgeGirl Scoreboard</h1>
                 <hr>
                 <form method="GET" action="./scoreboard.php" class="ts form" id="form">
@@ -32,11 +40,11 @@
         </div>
         <!--Waves Container-->
         <div>
-            <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <svg class="wave waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                 <defs>
                     <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
                 </defs>
-                <g class="parallax">
+                <g class="wave parallax">
                     <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
                     <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
                     <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
@@ -48,23 +56,22 @@
     </div>
     <!--Header ends-->
     <!--Content starts-->
-    <div class="content flex">
+    <div class="wave content flex">
         <p>
             <a href="https://codepen.io/goodkatz/pen/LYPGxQz" target="_blank">Daniel Österman</a> | 2019 | Modified by <a href="https://github.com/oToToT/JudgeGirl-Scoreboard" target="_blank">oToToT</a>
         </p>
-    
-        </div>
+    </div>
     <!--Content ends-->
     <script src="javascripts/moment.min.js"></script>
     <script src="javascripts/flatpickr.min.js"></script>
-<script>
-flatpickr(".flatpickr", {enableTime: true});
-document.getElementById('form').addEventListener('submit',function(e){
-    e.preventDefault();
-    let d = moment(document.getElementById("end_time").value);
-    document.getElementById("end").value = d.valueOf();
-    this.submit();
-});
-</script>
+    <script>
+    flatpickr(".flatpickr", {enableTime: true});
+    document.getElementById('form').addEventListener('submit',function(e){
+        e.preventDefault();
+        let d = moment(document.getElementById("end_time").value);
+        document.getElementById("end").value = d.valueOf();
+        this.submit();
+    });
+    </script>
 </body>
 </html>
