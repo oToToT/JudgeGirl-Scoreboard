@@ -50,7 +50,7 @@
     <!--Content starts-->
     <div class="content flex">
         <p>
-            <a href="https://codepen.io/goodkatz/pen/LYPGxQz" target="_blank">Daniel Österman</a> | 2019 | Modified by oToToT
+            <a href="https://codepen.io/goodkatz/pen/LYPGxQz" target="_blank">Daniel Österman</a> | 2019 | Modified by <a href="https://github.com/oToToT/JudgeGirl-Scoreboard" target="_blank">oToToT</a>
         </p>
     
         </div>
