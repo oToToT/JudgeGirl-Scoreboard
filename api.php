@@ -83,26 +83,24 @@ if(file_exists('./student_info.php')){
     require './student_info.php';
 }
 
+// use a lock file to cache data
 $LOCK_FILENAME = TMP_PATH.$_GET['cid'].'-jgsb.lock';
-$LOCK_FILE = fopen($LOCK_FILENAME, 'w');
-
+$LOCK_FILE = fopen($LOCK_FILENAME, 'c+');
+// check already in use
 if(flock($LOCK_FILE, LOCK_EX | LOCK_NB)){ 
+    // update data if file is no locked
     $result = json_encode(crawl_submissions($_GET['cid'], user_info));
     fwrite($LOCK_FILE, $result);
-    $RESULT_FILENAME = TMP_PATH.$_GET['cid'].'-jgsb';
-    $RESULT_FILE = fopen($RESULT_FILENAME, 'w');
-    if(flock($RESULT_FILE, LOCK_EX)){
-        fwrite($RESULT_FILE, $result);
-        fclose($RESULT_FILE);
-    }
-    fclose($LOCK_FILE);
+    ftruncate($LOCK_FILE, ftell($LOCK_FILE));
+    flock($LOCK_FILE, LOCK_UN);
+    fseek($LOCK_FILE, 0, SEEK_SET);
 }
 header('Content-type: application/json;');
-$RESULT_FILENAME = TMP_PATH.$_GET['cid'].'-jgsb';
-$RESULT_FILE = fopen($RESULT_FILENAME, 'r');
-if(flock($RESULT_FILE, LOCK_SH)){
-    $result = fread($RESULT_FILE, filesize($RESULT_FILENAME));
-    echo $result;
-    fclose($RESULT_FILE);
+if(flock($LOCK_FILE, LOCK_SH)){
+    // return saved content
+    echo fread($LOCK_FILE, filesize($LOCK_FILENAME));
+    fclose($LOCK_FILE);
+} else {
+    echo 'Error opening lock file.';
 }
 ?>
