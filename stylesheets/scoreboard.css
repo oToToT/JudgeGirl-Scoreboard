@@ -1,0 +1,35 @@
+.navmenu {
+    font-size: 16px !important;
+}
+.ts.tle.statistics .statistic>.value, .ts.statistics .tle.statistic>.value, .ts.tle.statistic>.value {
+    color: #9b00b7;
+}
+.ts.mle.statistics .statistic>.value, .ts.statistics .mle.statistic>.value, .ts.mle.statistic>.value {
+    color: #ffd94f;
+}
+.ts.running.statistics .statistic>.value, .ts.statistics .running.statistic>.value, .ts.running.statistic>.value {
+    color: #000000;
+}
+.clickable{
+    cursor: pointer;
+}
+.ts.table tr.tle:not(.indicated), .ts.table td.tle:not(.indicated) {
+    color: #9b00b7 !important;
+    background: #ecbaf5 !important;
+}
+.ts.table tr.mle:not(.indicated), .ts.table td.mle:not(.indicated) {
+    color: #ffd94f !important;
+    background: #fff6d4 !important;
+}
+.ts.table tr.running:not(.indicated), .ts.table td.running:not(.indicated) {
+    color: #000000 !important;
+}
+.ts.table tr.tle.indicated, .ts.table td.tle.indicated {
+    box-shadow: 2px 0 0 #be02e0 inset !important;
+}
+.ts.table tr.mle.indicated, .ts.table td.mle.indicated {
+    box-shadow: 2px 0 0 #fdcf28 inset !important;
+}
+.ts.table tr.running.indicated, .ts.table td.running.indicated {
+    box-shadow: 2px 0 0 #000000 inset !important;
+}

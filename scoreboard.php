@@ -24,20 +24,7 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
 <meta charset='utf-8'>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href='https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.3/tocas.css' rel='stylesheet' type='text/css'>
-<style>
-.navmenu {
-    font-size: 16px !important;
-}
-.ts.tle.statistics .statistic>.value, .ts.statistics .tle.statistic>.value, .ts.tle.statistic>.value {
-    color: #9b00b7;
-}
-.ts.mle.statistics .statistic>.value, .ts.statistics .mle.statistic>.value, .ts.mle.statistic>.value {
-    color: #ffd94f;
-}
-.ts.running.statistics .statistic>.value, .ts.statistics .running.statistic>.value, .ts.running.statistic>.value {
-    color: #000000;
-}
-</style>
+<link href='stylesheets/scoreboard.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <div class="ts active dimmer" id="dimmer">
@@ -99,13 +86,17 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
             </tr>
         </thead>
         <tbody>
-            <tr v-for="user in users">
-                <td>{{user.uid}}</td>
-                <td>{{user.trials}}</td>
-                <td>{{user.score}}</td>
-                <td>{{user.last.getHours()}}:{{String(user.last.getMinutes()).padStart(2, '0')}}:{{String(user.last.getSeconds()).padStart(2, '0')}}</td>
-                <td class="center aligned" v-for="score in user.scores" v-bind:class="{positive: score==100, error: score==0}">{{score}}</td>
-            </tr>
+            <template v-for="user in users">
+                <tr>
+                    <td class='clickable' v-on:click='submissionDetail(user.uid)'>{{user.uid}}</td>
+                    <td>{{user.trials}}</td>
+                    <td>{{user.score}}</td>
+                    <td>{{user.last.getHours()}}:{{String(user.last.getMinutes()).padStart(2, '0')}}:{{String(user.last.getSeconds()).padStart(2, '0')}}</td>
+                    <template v-for="(score, pid) in user.scores">
+                        <td class="center aligned clickable" v-bind:class="{positive: score==100, error: score==0}" v-on:click='submissionDetail(user.uid, pid)'>{{score}}</td>
+                    </template>
+                </tr>
+            </template>
         </tbody>
         <tfoot>
             <tr v-if="users.length!=0">
@@ -117,13 +108,57 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
             </tr>
         </tfoot>
     </table>
+    <div class="ts modals dimmer">
+        <dialog id="sDetail" class="ts closable modal">
+            <i class="close icon"></i>
+            <div class="ts header">
+                Submission Detail for {{username}}{{problem_name === ''?'':"'s "+problem_name}}
+            </div>
+            <div class="content">
+                <table class="ts celled table">
+                    <thead>
+                        <tr>
+                            <th>Problem Name</th>
+                            <th>Submission ID</th>
+                            <th>Result</th>
+                            <th>Score</th>
+                            <th>Submit Time</th>
+                            <th>Time</th>
+                            <th>Memory</th>
+                            <th>Code Length</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="submission in submissions">
+                            <tr v-bind:class='{indicated: true, positive: submission.result=="AC", negative: submission.result=="WA", info: submission.result=="CE", warning: submission.result=="RE", tle: submission.result=="TLE", mle: submission.result=="MLE", runnning: submission.result=="Running"}'>
+                                <td>{{scoreboard.problems[submission.pid].name}}</td>
+                                <td><a v-bind:href='"https://judgegirl.csie.org/submission?sid="+submission.sid' target='_blank'>{{submission.sid}}</a></td>
+                                <td v-bind:class='{positive: submission.result=="AC", negative: submission.result=="WA", info: submission.result=="CE", warning: submission.result=="RE", tle: submission.result=="TLE", mle: submission.result=="MLE", runnning: submission.result=="Running"}'>{{submission.result}}</td>
+                                <td>{{submission.score}}</td>
+                                <td>{{submission.timestamp.getHours()}}:{{String(submission.timestamp.getMinutes()).padStart(2, '0')}}:{{String(submission.timestamp.getSeconds()).padStart(2, '0')}}</td>
+                                <td>{{submission.cpu_time}}ms</td>
+                                <td>{{submission.memory/1024}} KiB</td>
+                                <td>{{submission.length}} Bytes</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+            <div class="actions">
+                <button class="ts button" onclick="ts('#sDetail').modal('hide')">
+                    Close
+                </button>
+            </div>
+        </dialog>
+    </div>    
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.3/tocas.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="javascripts/scoreboard.js"></script>
     <script>
-        scoreboard.sorting.key = 'score';
-        scoreboard.sorting.state = -1;
-        render(<?= $_GET['cid'] ?>);
+    scoreboard.sorting.key = 'score';
+    scoreboard.sorting.state = -1;
+    render(<?= $_GET['cid'] ?>);
     </script>
 </body>
 </html>

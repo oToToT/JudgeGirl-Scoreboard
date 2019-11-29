@@ -12,12 +12,22 @@ let statistics = new Vue({
         running: 0
     }
 });
+let submission_detail = new Vue({
+    el: '#sDetail',
+    data: {
+        submissions: [],
+        username: '',
+        problem_name: ''
+    }
+});
 let scoreboard = new Vue({
     el: "#scoreboard",
     data: {
         sorting: { key: undefined, state: 0 },
         problems: [],
-        users: []
+        users: [],
+        submission_detail: [],
+        selected_user: ''
     },
     methods: {
         sortBy: function(key) {
@@ -39,14 +49,26 @@ let scoreboard = new Vue({
                     return (a.scores[key] - b.scores[key]) * that.sorting.state;
                 });
             }
+        },
+        submissionDetail : function(uid, pid) {
+            let s = this.users.find(user=>user.uid === uid).submissions;
+            if (typeof pid !== 'undefined')
+                s = s.filter(submission=>submission.pid === pid);
+            submission_detail.submissions = s;
+            submission_detail.username = uid;
+            submission_detail.problem_name = '';
+            if (typeof pid !== 'undefined')
+                submission_detail.problem_name = this.problems[pid].name;
+            ts('#sDetail').modal('show');
         }
     }
 });
+
 function render(cid) {
     axios({
         method: 'GET',
         url: './api.php',
-        timeout: 2000,
+        timeout: 3000,
         params: {
             cid: cid
         },
@@ -55,19 +77,22 @@ function render(cid) {
         let stat = res.data.stat;
         statistics.submissions = stat.submissions;
         statistics.last_update = Date.now();
-        statistics.ac = stat.ac;
-        statistics.wa = stat.wa;
-        statistics.ce = stat.ce;
-        statistics.re = stat.re;
-        statistics.tle = stat.tle;
-        statistics.mle = stat.mle;
-        statistics.running = stat.running;
+        statistics.ac = stat.AC;
+        statistics.wa = stat.WA;
+        statistics.ce = stat.CE;
+        statistics.re = stat.RE;
+        statistics.tle = stat.TLE;
+        statistics.mle = stat.MLE;
+        statistics.running = stat.Running;
 
         scoreboard.problems = res.data.problems;
 
         let users = res.data.users;
-        users.forEach(function(user){
+        users.forEach(function(user) {
             user.last = new Date(user.last);
+            user.submissions.forEach(function(submission) {
+                submission.timestamp = new Date(submission.timestamp);
+            });
         });
 
         let sort_key = scoreboard.sorting.key;
