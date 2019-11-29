@@ -10,7 +10,7 @@ if(!filter_var($_GET['cid'], FILTER_VALIDATE_INT)){
 function crawl_submissions($cid, $user_info){
     // call crawler.py to crawl submission
     $submissions = json_decode(exec('python3 crawler.py '.escapeshellarg($cid)));
-
+    
     $res2text = ['running', 'ce', 'ole', 'mle', 're', 'tle', 'wa', 'ac', 'uploading', 'pe'];
 
     // initiallize some variable to analyze submissions
@@ -47,6 +47,17 @@ function crawl_submissions($cid, $user_info){
         $users[$submission->uid]['trials'] += 1;
         $users[$submission->uid]['scores'][$submission->pid] = max($users[$submission->uid]['scores'][$submission->pid], $submission->scr);
         $users[$submission->uid]['last'] = max($users[$submission->uid]['last'], $submission->ts);
+        if(!$users[$submission->uid]['submissions'])
+            $users[$submission->uid]['submissions'] = array();
+        array_push($users[$submission->uid]['submissions'], array(
+            'score'=>$submission->scr,
+            'memory'=>$submission->mem,
+            'cpu_time'=>$submission->cpu,
+            'timestamp'=>$submission->ts,
+            'result'=>$res2text[$submission->res],
+            'pid'=>$submission->pid,
+            'length'=>$submission->len
+        ));
         // calculate total score for a single problem
         $problems[$submission->pid]['total_score'] += $users[$submission->uid]['scores'][$submission->pid];
     }
@@ -72,6 +83,7 @@ function crawl_submissions($cid, $user_info){
         }
         if(isset($user_info[$user['uid']]))
             $user['uid'] = $user_info[$user['uid']];
+        $user['submissions'] = $user['submissions'];
         array_push($parsed['users'], $user);
     }
     return $parsed;
