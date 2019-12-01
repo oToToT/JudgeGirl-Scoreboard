@@ -135,8 +135,8 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
                                 <td><a v-bind:href='"https://judgegirl.csie.org/submission?sid="+submission.sid' target='_blank'>{{submission.sid}}</a></td>
                                 <td v-bind:class='{positive: submission.result=="AC", negative: submission.result=="WA", info: submission.result=="CE", warning: submission.result=="RE", tle: submission.result=="TLE", mle: submission.result=="MLE", runnning: submission.result=="Running"}'>{{submission.result}}</td>
                                 <td>{{submission.score}}</td>
-                                <td>{{submission.timestamp.getHours()}}:{{String(submission.timestamp.getMinutes()).padStart(2, '0')}}:{{String(submission.timestamp.getSeconds()).padStart(2, '0')}}</td>
-                                <td>{{submission.cpu_time}}ms</td>
+                                <td>{{submission.timestamp.toLocaleString()}}</td>
+                                <td>{{submission.cpu_time}} ms</td>
                                 <td>{{submission.memory/1024}} KiB</td>
                                 <td>{{submission.length}} Bytes</td>
                             </tr>
