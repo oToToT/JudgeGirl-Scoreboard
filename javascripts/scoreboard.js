@@ -25,9 +25,7 @@ let scoreboard = new Vue({
     data: {
         sorting: { key: undefined, state: 0 },
         problems: [],
-        users: [],
-        submission_detail: [],
-        selected_user: ''
+        users: []
     },
     methods: {
         sortBy: function(key) {
