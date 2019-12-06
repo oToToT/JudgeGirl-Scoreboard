@@ -103,7 +103,7 @@ $LOCK_FILE = fopen($LOCK_FILENAME, 'c+');
 // check already in use
 if(flock($LOCK_FILE, LOCK_EX | LOCK_NB)){ 
     // update data if file is no locked
-    $result = json_encode(crawl_submissions($_GET['cid'], user_info));
+    $result = json_encode(crawl_submissions($_GET['cid'], $user_info));
     fwrite($LOCK_FILE, $result);
     ftruncate($LOCK_FILE, ftell($LOCK_FILE));
     flock($LOCK_FILE, LOCK_UN);
