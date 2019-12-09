@@ -6,8 +6,9 @@ if (!isset($_GET['cid'])) {
 if (!filter_var($_GET['cid'], FILTER_VALIDATE_INT)) {
     die('Invalid cid');
 }
+header('Content-type: application/json;');
 
-function crawl_submissions($cid, $user_info) {
+function crawl_submissions($cid) {
     // call crawler.py to crawl submission
     $submissions = json_decode(exec('python3 crawler.py '.escapeshellarg($cid)));
     
@@ -82,13 +83,22 @@ function crawl_submissions($cid, $user_info) {
             if(!$tmp[$pid]) $tmp[$pid] = 0;
             $user['scores'][$problem2id[$pid]]=$tmp[$pid];
         }
-        if (isset($user_info[$user['uid']]))
-            $user['uid'] = $user_info[$user['uid']];
         foreach ($user['submissions'] as $sid=>$submission)
             $user['submissions'][$sid]['pid'] = $problem2id[$submission['pid']];
         array_push($parsed['users'], $user);
     }
     return $parsed;
+}
+
+function result2json($result, $student_info) {
+    // use $student_info to process $result
+    // return a json encoded string of $result
+    foreach ($result['users'] as $user) {
+        if (isset($student_info[$user['uid']])) {
+            $user['uid'] = $student_info[$user['uid']];
+        }
+    }
+    return json_encode($result);
 }
 
 // include student_info.php
@@ -103,18 +113,20 @@ $LOCK_FILE = fopen($LOCK_FILENAME, 'c+');
 // check already in use
 if(flock($LOCK_FILE, LOCK_EX | LOCK_NB)){ 
     // update data if file is no locked
-    $result = json_encode(crawl_submissions($_GET['cid'], $user_info));
-    fwrite($LOCK_FILE, $result);
+    $result = crawl_submissions($_GET['cid']);
+    // only cached crawled and processed data to avoid privilege escalation
+    fwrite($LOCK_FILE, json_encode($result));
     ftruncate($LOCK_FILE, ftell($LOCK_FILE));
     flock($LOCK_FILE, LOCK_UN);
-    fseek($LOCK_FILE, 0, SEEK_SET);
+    fclose($LOCK_FILE);
+    die(result2json($result, $student_info));
 }
-header('Content-type: application/json;');
 if(flock($LOCK_FILE, LOCK_SH)){
     // return saved content
-    echo fread($LOCK_FILE, filesize($LOCK_FILENAME));
+    $result = json_decode(fread($LOCK_FILE, filesize($LOCK_FILENAME)));
     fclose($LOCK_FILE);
+    die(result2json($result, $student_info));
 } else {
-    echo 'Error opening lock file.';
+    die('Error opening lock file.');
 }
 ?>
