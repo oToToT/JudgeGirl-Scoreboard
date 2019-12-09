@@ -90,14 +90,16 @@ function crawl_submissions($cid) {
     return $parsed;
 }
 
-function result2json($result, $student_info) {
-    // use $student_info to process $result
+function result2json($result, $user_info) {
+    // use $user_info to process $result
     // return a json encoded string of $result
-    foreach ($result['users'] as $user) {
-        if (isset($student_info[$user['uid']])) {
-            $user['uid'] = $student_info[$user['uid']];
+    foreach ($result['users'] as &$user) {
+        if (isset($user_info[$user['uid']])) {
+            $user['uid'] = $user_info[$user['uid']];
         }
     }
+    // when using reference it is better to unset it
+    // however it will disappear normally, here
     return json_encode($result);
 }
 
@@ -119,13 +121,13 @@ if(flock($LOCK_FILE, LOCK_EX | LOCK_NB)){
     ftruncate($LOCK_FILE, ftell($LOCK_FILE));
     flock($LOCK_FILE, LOCK_UN);
     fclose($LOCK_FILE);
-    die(result2json($result, $student_info));
+    die(result2json($result, $user_info));
 }
 if(flock($LOCK_FILE, LOCK_SH)){
-    // return saved content
-    $result = json_decode(fread($LOCK_FILE, filesize($LOCK_FILENAME)));
+    // return saved content from json to array to str
+    $result = json_decode(fread($LOCK_FILE, filesize($LOCK_FILENAME)), true);
     fclose($LOCK_FILE);
-    die(result2json($result, $student_info));
+    die(result2json($result, $user_info));
 } else {
     die('Error opening lock file.');
 }
