@@ -8,6 +8,10 @@ if (!filter_var($_GET['cid'], FILTER_VALIDATE_INT)) {
 }
 header('Content-type: application/json;');
 
+function sort_user_by_last($a, $b) {
+    return $a['last'] - $b['last'];
+}
+
 function crawl_submissions($cid) {
     // call crawler.py to crawl submission
     $submissions = json_decode(exec('python3 crawler.py '.escapeshellarg($cid)));
@@ -114,6 +118,7 @@ function crawl_submissions($cid) {
             $user['submissions'][$sid]['pid'] = $problem2id[$submission['pid']];
         array_push($parsed['users'], $user);
     }
+    usort($parsed['users'], sort_user_by_last);
     return $parsed;
 }
 
