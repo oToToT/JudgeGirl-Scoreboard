@@ -26,4 +26,4 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print("usage: ./crawler.py CID")
     else:
-        print(json.dumps(get_submissions(sys.argv[1])[::-1]))
+        print(json.dumps(get_submissions(sys.argv[1])))
