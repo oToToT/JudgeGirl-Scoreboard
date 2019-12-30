@@ -44,7 +44,7 @@ let scoreboard = new Vue({
                 });
             } else if (typeof key === "number") {
                 this.users.sort(function(a, b) {
-                    return (a.scores[key] - b.scores[key]) * that.sorting.state;
+                    return (a.scores[key].score - b.scores[key].score) * that.sorting.state;
                 });
             }
         },
@@ -84,7 +84,8 @@ function render(cid) {
         statistics.running = stat.Running;
 
         scoreboard.problems = res.data.problems;
-
+        
+        // transform timestamp to Date
         let users = res.data.users;
         users.forEach(function(user) {
             user.last = new Date(user.last);
@@ -93,6 +94,7 @@ function render(cid) {
             });
         });
 
+        // sort users as scoreboard.sortBy
         let sort_key = scoreboard.sorting.key;
         if (typeof sort_key === "string") {
             users.sort(function(a, b) {
@@ -102,7 +104,7 @@ function render(cid) {
             });
         } else if (typeof sort_key === "number") {
             users.sort(function(a, b) {
-                return (a.scores[sort_key] - b.scores[sort_key]) * scoreboard.sorting.state;
+                return (a.scores[sort_key].score - b.scores[sort_key].score) * scoreboard.sorting.state;
             });
         }
 
