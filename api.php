@@ -78,7 +78,10 @@ function crawl_submissions($cid) {
     // add problems into parsed
     $problem2id = array();
     $parsed['problems'] = array();
-    foreach ($problems as $id => $data) {
+    $keys = array_keys($problems);
+    sort($keys);
+    foreach ($keys as $id) {
+        $data = $problems[$id];
         $problem2id[$id] = count($parsed['problems']);
         $data['ac_users'] = count($data['ac_users']);
         $data['total_users'] = count($data['total_users']);
