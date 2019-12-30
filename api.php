@@ -22,20 +22,29 @@ function crawl_submissions($cid) {
     $parsed['stat']['submissions'] = count($submissions);
     foreach ($res2text as $key) $parsed['stat'][$key] = 0;
     foreach ($submissions as $submission) {
+        // add verdict to stat
         $parsed['stat'][$res2text[$submission->res]] += 1;
-
+        // get problem title
         $problems[$submission->pid]['name'] = $submission->ttl;
+        // count submissions of problem with pid
         $problems[$submission->pid]['total'] += 1;
-        $trials[$submission->uid] += 1;
-        // if this submission is AC
+        // count trials of problem with pid and user with uid
+        if (!$trials[$submission->pid])
+            $trials[$submission->pid] = array();
+        $trials[$submission->pid][$submission->uid] += 1;
+
         if ($submission->res == 7) {
+            // count number of ac users of problem with pid
             $problems[$submission->pid]['ac'] += 1;
+            // initiallize ac_users array
             if (!$problems[$submission->pid]['ac_users'])
                 $problems[$submission->pid]['ac_users'] = array();
+            // count if user doesn't exist
             if (!in_array($submission->uid, $problems[$submission->pid]['ac_users'], true)) {
-                $problems[$submission->pid]['ac_trials'] += $trials[$submission->uid];
+                $problems[$submission->pid]['ac_trials'] += $trials[$submission->pid][$submission->uid];
                 array_push($problems[$submission->pid]['ac_users'], $submission->uid);
             }
+            // user with uid got AC at problem with pid
             $users[$submission->uid]['scores'][$submission->pid]['type'] = max($users[$submission->uid]['scores'][$submission->pid]['type'], 3);
         } else if($submission->res !== 0 && $subumission->res !== 8) {
             // not running and not uploading
@@ -43,11 +52,12 @@ function crawl_submissions($cid) {
                 // score = 0
                 $users[$submission->uid]['scores'][$submission->pid]['type'] = max($users[$submission->uid]['scores'][$submission->pid]['type'], 1);
             } else {
+                // have some points
                 $users[$submission->uid]['scores'][$submission->pid]['type'] = max($users[$submission->uid]['scores'][$submission->pid]['type'], 2);
 
             }
         }
-        // process total score and total for a problem
+        // process total score for a problem
         if (!$problems[$submission->pid]['total_users'])
             $problems[$submission->pid]['total_users'] = array();
         if (!in_array($submission->uid, $problems[$submission->pid]['total_users'], true))
@@ -57,9 +67,9 @@ function crawl_submissions($cid) {
         $users[$submission->uid]['uid'] = $submission->lgn;
         $users[$submission->uid]['trials'] += 1;
         $users[$submission->uid]['scores'][$submission->pid]['score'] = max($users[$submission->uid]['scores'][$submission->pid]['score'], $submission->scr);
-        assert($users[$submission->uid]['scores'][$submission->pid]['score'] !== null);
         $users[$submission->uid]['scores'][$submission->pid]['type'] = max($users[$submission->uid]['scores'][$submission->pid]['type'], 0);
         $users[$submission->uid]['last'] = max($users[$submission->uid]['last'], $submission->ts);
+
         if (!$users[$submission->uid]['submissions'])
             $users[$submission->uid]['submissions'] = array();
         array_push($users[$submission->uid]['submissions'], array(
@@ -75,6 +85,7 @@ function crawl_submissions($cid) {
         // calculate total score for a single problem
         $problems[$submission->pid]['total_score'] += $users[$submission->uid]['scores'][$submission->pid]['score'];
     }
+
     // add problems into parsed
     $problem2id = array();
     $parsed['problems'] = array();
@@ -84,7 +95,6 @@ function crawl_submissions($cid) {
         $data = $problems[$id];
         $problem2id[$id] = count($parsed['problems']);
         $data['ac_users'] = count($data['ac_users']);
-        $data['total_users'] = count($data['total_users']);
         array_push($parsed['problems'], $data);
     }
 
