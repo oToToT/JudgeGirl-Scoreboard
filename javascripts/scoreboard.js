@@ -51,7 +51,7 @@ let scoreboard = new Vue({
         submissionDetail : function(uid, pid) {
             let s = this.users.find(user=>user.uid === uid).submissions;
             if (typeof pid !== 'undefined')
-                s = s.filter(submission=>submission.pid === pid);
+                s = s.filter(submission=>submission.pid == pid);
             submission_detail.submissions = s;
             submission_detail.username = uid;
             submission_detail.problem_name = '';
