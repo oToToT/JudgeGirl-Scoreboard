@@ -79,9 +79,9 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
         <thead>
             <tr>
                 <th class="two wide" v-on:click="sortBy('uid')" v-bind:class="{sorted: sorting.key=='uid', ascending: sorting.key=='uid'&&sorting.state==1, descending: sorting.key=='uid'&&sorting.state==-1}">User</th>
+                <th class="two wide" v-on:click="sortBy('last')" v-bind:class="{sorted: sorting.key=='last', ascending: sorting.key=='last'&&sorting.state==1, descending: sorting.key=='last'&&sorting.state==-1}">Last Submission</th>
                 <th class="one wide" v-on:click="sortBy('trials')" v-bind:class="{sorted: sorting.key=='trials', ascending: sorting.key=='trials'&&sorting.state==1, descending: sorting.key=='trials'&&sorting.state==-1}">Trials</th>
                 <th class="one wide" v-on:click="sortBy('score')" v-bind:class="{sorted: sorting.key=='score', ascending: sorting.key=='score'&&sorting.state==1, descending: sorting.key=='score'&&sorting.state==-1}">Total Score</th>
-                <th class="two wide" v-on:click="sortBy('last')" v-bind:class="{sorted: sorting.key=='last', ascending: sorting.key=='last'&&sorting.state==1, descending: sorting.key=='last'&&sorting.state==-1}">Last Submission</th>
                 <th class="center aligned" v-for="(problem,index) in problems" v-on:click="sortBy(index)" v-bind:class="{sorted: sorting.key==index, ascending: sorting.key==index&&sorting.state==1, descending: sorting.key==index&&sorting.state==-1}">{{problem.name}} ({{problem.ac}}/{{problem.total}})</th>
             </tr>
         </thead>
@@ -89,9 +89,9 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
             <template v-for="user in users">
                 <tr>
                     <td class='clickable' v-on:click='submissionDetail(user.uid)'>{{user.uid}}</td>
+                    <td>{{user.last.getHours()}}:{{String(user.last.getMinutes()).padStart(2, '0')}}:{{String(user.last.getSeconds()).padStart(2, '0')}}</td>
                     <td>{{user.trials}}</td>
                     <td>{{user.score}}</td>
-                    <td>{{user.last.getHours()}}:{{String(user.last.getMinutes()).padStart(2, '0')}}:{{String(user.last.getSeconds()).padStart(2, '0')}}</td>
                     <template v-for="(data, pid) in user.scores">
                         <td class="center aligned clickable" v-bind:class="{positive: data.type==3, error: data.type==1}" v-on:click='submissionDetail(user.uid, pid)'>{{data.score}}</td>
                     </template>
@@ -155,10 +155,10 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="javascripts/scoreboard.js"></script>
-    <script>
-    scoreboard.sorting.key = 'score';
-    scoreboard.sorting.state = -1;
-    render(<?= $_GET['cid'] ?>);
-    </script>
+<script>
+scoreboard.sorting.key = 'score';
+scoreboard.sorting.state = -1;
+render(<?= $_GET['cid'] ?>);
+</script>
 </body>
 </html>
