@@ -11,7 +11,7 @@ header('Content-type: application/json;');
 function crawl_submissions($cid) {
     // call crawler.py to crawl submission
     $submissions = json_decode(exec('python3 crawler.py '.escapeshellarg($cid)));
-    
+
     $res2text = ['Running', 'CE', 'OLE', 'MLE', 'RE', 'TLE', 'WA', 'AC', 'Uploading', 'PE'];
 
     // initiallize some variable to analyze submissions
@@ -36,17 +36,29 @@ function crawl_submissions($cid) {
                 $problems[$submission->pid]['ac_trials'] += $trials[$submission->uid];
                 array_push($problems[$submission->pid]['ac_users'], $submission->uid);
             }
+            $users[$submission->uid]['scores'][$submission->pid]['type'] = max($users[$submission->uid]['scores'][$submission->pid]['type'], 3);
+        } else if($submission->res !== 0 && $subumission->res !== 8) {
+            // not running and not uploading
+            if ($submission->scr === 0) {
+                // score = 0
+                $users[$submission->uid]['scores'][$submission->pid]['type'] = max($users[$submission->uid]['scores'][$submission->pid]['type'], 1);
+            } else {
+                $users[$submission->uid]['scores'][$submission->pid]['type'] = max($users[$submission->uid]['scores'][$submission->pid]['type'], 2);
+
+            }
         }
         // process total score and total for a problem
         if (!$problems[$submission->pid]['total_users'])
             $problems[$submission->pid]['total_users'] = array();
         if (!in_array($submission->uid, $problems[$submission->pid]['total_users'], true))
             array_push($problems[$submission->pid]['total_users'], $submission->uid);
-        $problems[$submission->pid]['total_score'] -= $users[$submission->uid]['scores'][$submission->pid];
+        $problems[$submission->pid]['total_score'] -= $users[$submission->uid]['scores'][$submission->pid]['score'];
         // process user's data
         $users[$submission->uid]['uid'] = $submission->lgn;
         $users[$submission->uid]['trials'] += 1;
-        $users[$submission->uid]['scores'][$submission->pid] = max($users[$submission->uid]['scores'][$submission->pid], $submission->scr);
+        $users[$submission->uid]['scores'][$submission->pid]['score'] = max($users[$submission->uid]['scores'][$submission->pid]['score'], $submission->scr);
+        assert($users[$submission->uid]['scores'][$submission->pid]['score'] !== null);
+        $users[$submission->uid]['scores'][$submission->pid]['type'] = max($users[$submission->uid]['scores'][$submission->pid]['type'], 0);
         $users[$submission->uid]['last'] = max($users[$submission->uid]['last'], $submission->ts);
         if (!$users[$submission->uid]['submissions'])
             $users[$submission->uid]['submissions'] = array();
@@ -61,7 +73,7 @@ function crawl_submissions($cid) {
             'length'=>$submission->len
         ));
         // calculate total score for a single problem
-        $problems[$submission->pid]['total_score'] += $users[$submission->uid]['scores'][$submission->pid];
+        $problems[$submission->pid]['total_score'] += $users[$submission->uid]['scores'][$submission->pid]['score'];
     }
     // add problems into parsed
     $problem2id = array();
@@ -76,12 +88,14 @@ function crawl_submissions($cid) {
     // add users into parsed
     $parsed['users'] = array();
     foreach ($users as $user) {
-        $user['score'] = array_sum($user['scores']);
+        $user['score'] = 0;
         $tmp = $user['scores'];
         unset($user['scores']);
         foreach ($problems as $pid=>$s) {
-            if(!$tmp[$pid]) $tmp[$pid] = 0;
-            $user['scores'][$problem2id[$pid]]=$tmp[$pid];
+            if(!$tmp[$pid]) $tmp[$pid] = array('score'=>0, 'type'=>0);
+            $tmp[$pid]['score'] = intval($tmp[$pid]['score']);
+            $user['scores'][$problem2id[$pid]] = $tmp[$pid];
+            $user['score'] += $tmp[$pid]['score'];
         }
         foreach ($user['submissions'] as $sid=>$submission)
             $user['submissions'][$sid]['pid'] = $problem2id[$submission['pid']];

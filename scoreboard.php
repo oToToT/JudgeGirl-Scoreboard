@@ -92,8 +92,8 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
                     <td>{{user.trials}}</td>
                     <td>{{user.score}}</td>
                     <td>{{user.last.getHours()}}:{{String(user.last.getMinutes()).padStart(2, '0')}}:{{String(user.last.getSeconds()).padStart(2, '0')}}</td>
-                    <template v-for="(score, pid) in user.scores">
-                        <td class="center aligned clickable" v-bind:class="{positive: score==100, error: score==0}" v-on:click='submissionDetail(user.uid, pid)'>{{score}}</td>
+                    <template v-for="(data, pid) in user.scores">
+                        <td class="center aligned clickable" v-bind:class="{positive: data.type==3, error: data.type==1}" v-on:click='submissionDetail(user.uid, pid)'>{{data.score}}</td>
                     </template>
                 </tr>
             </template>
