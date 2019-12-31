@@ -78,6 +78,7 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
     <table class="ts sortable selectable single line celled table" id="scoreboard">
         <thead>
             <tr>
+                <th>Rank</th>
                 <th class="two wide" v-on:click="sortBy('uid')" v-bind:class="{sorted: sorting.key=='uid', ascending: sorting.key=='uid'&&sorting.state==1, descending: sorting.key=='uid'&&sorting.state==-1}">User</th>
                 <th class="two wide" v-on:click="sortBy('last')" v-bind:class="{sorted: sorting.key=='last', ascending: sorting.key=='last'&&sorting.state==1, descending: sorting.key=='last'&&sorting.state==-1}">Last Submission</th>
                 <th class="one wide" v-on:click="sortBy('trials')" v-bind:class="{sorted: sorting.key=='trials', ascending: sorting.key=='trials'&&sorting.state==1, descending: sorting.key=='trials'&&sorting.state==-1}">Trials</th>
@@ -86,8 +87,9 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
             </tr>
         </thead>
         <tbody>
-            <template v-for="user in users">
+            <template v-for="(user, id) in users">
                 <tr>
+                    <td>{{id+1}}</td>
                     <td class='clickable' v-on:click='submissionDetail(user.uid)'>{{user.uid}}</td>
                     <td>{{user.last.getHours()}}:{{String(user.last.getMinutes()).padStart(2, '0')}}:{{String(user.last.getSeconds()).padStart(2, '0')}}</td>
                     <td>{{user.trials}}</td>
@@ -100,11 +102,11 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
         </tbody>
         <tfoot>
             <tr v-if="users.length!=0">
-                <th class="right aligned" colspan="4">Average Trials to AC / Average Score / Number of AC Users</th>
+                <th class="right aligned" colspan="5">Average Trials to AC / Average Score / Number of AC Users</th>
                 <th class="center aligned" v-for="problem in problems">{{problem.ac_users == 0 ? "No AC" : Math.ceil(problem.ac_trials/problem.ac_users*100)/100}} / {{Math.ceil(problem.total_score/users.length*100)/100}} / {{problem.ac_users}}</th>
             </tr>
             <tr v-else="v-else">
-                <th class="center aligned" colspan="4">No Submissions!</th>
+                <th class="center aligned" colspan="5">No Submissions!</th>
             </tr>
         </tfoot>
     </table>
