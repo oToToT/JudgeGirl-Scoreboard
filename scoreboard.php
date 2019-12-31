@@ -78,7 +78,7 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
     <table class="ts sortable selectable single line celled table" id="scoreboard">
         <thead>
             <tr>
-                <th>Rank</th>
+                <th>#</th>
                 <th class="two wide" v-on:click="sortBy('uid')" v-bind:class="{sorted: sorting.key=='uid', ascending: sorting.key=='uid'&&sorting.state==1, descending: sorting.key=='uid'&&sorting.state==-1}">User</th>
                 <th class="two wide" v-on:click="sortBy('last')" v-bind:class="{sorted: sorting.key=='last', ascending: sorting.key=='last'&&sorting.state==1, descending: sorting.key=='last'&&sorting.state==-1}">Last Submission</th>
                 <th class="one wide" v-on:click="sortBy('trials')" v-bind:class="{sorted: sorting.key=='trials', ascending: sorting.key=='trials'&&sorting.state==1, descending: sorting.key=='trials'&&sorting.state==-1}">Trials</th>
@@ -87,9 +87,9 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
             </tr>
         </thead>
         <tbody>
-            <template v-for="(user, id) in users">
+            <template v-for="(user, index) in users">
                 <tr>
-                    <td>{{id+1}}</td>
+                    <td>{{index+1}}</td>
                     <td class='clickable' v-on:click='submissionDetail(user.uid)'>{{user.uid}}</td>
                     <td>{{user.last.getHours()}}:{{String(user.last.getMinutes()).padStart(2, '0')}}:{{String(user.last.getSeconds()).padStart(2, '0')}}</td>
                     <td>{{user.trials}}</td>
