@@ -134,7 +134,7 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
                         <template v-for="submission in submissions">
                             <tr v-bind:class='{indicated: true, positive: submission.result=="AC", negative: submission.result=="WA", info: submission.result=="CE", warning: submission.result=="RE", tle: submission.result=="TLE", mle: submission.result=="MLE", runnning: submission.result=="Running"}'>
                                 <td>{{scoreboard.problems[submission.pid].name}}</td>
-                                <td><a v-bind:href='"https://judgegirl.csie.org/submission?sid="+submission.sid' target='_blank'>{{submission.sid}}</a></td>
+                                <td><a v-bind:href='"<?= JUDGEGIRL_URL ?>submission?sid="+submission.sid' target='_blank'>{{submission.sid}}</a></td>
                                 <td v-bind:class='{positive: submission.result=="AC", negative: submission.result=="WA", info: submission.result=="CE", warning: submission.result=="RE", tle: submission.result=="TLE", mle: submission.result=="MLE", runnning: submission.result=="Running"}'>{{submission.result}}</td>
                                 <td>{{submission.score}}</td>
                                 <td>{{submission.timestamp.toLocaleString()}}</td>

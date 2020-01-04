@@ -3,12 +3,14 @@ import requests
 import sys
 import json
 import argparse
+from urllib.parse import urljoin
 
 def get_submissions(cid):
     """
     get submisisions from JudgeGirl
     """
-    url = f'https://judgegirl.csie.org/api/submission?cid={cid}&limit=20'
+    config = json.load(open('config.json'))
+    url = urljoin(config['JUDGEGIRL_URL'], f'/api/submission?cid={cid}&limit=20')
     id_st = set()
     data = []
     page_id = 1

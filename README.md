@@ -35,7 +35,7 @@ Then `git clone https://github.com/oToToT/JudgeGirl-Scoreboard.git`, now those s
 
 Run `pip install -r requirements.txt` to install dependencies for those python scripts.
 
-Edit `URL_BASE` to the url of your website and `TMP_PATH` to the path which could store a temp file in  `config.example.php` and rename it to `config.php` (notice that a `/` behind `TMP_PATH` is important).
+Edit `URL_BASE` to the url of your website, `TMP_PATH` to the path which could store a temp file, and `JUDGEGIRL_URL` to JudgeGirl's url in `config.example.json` and rename it to `config.json` (notice that a `/` behind any path is important).
 
 To customize display name, you should modify `student_info.example.php` which stores a mapping from uid to what you want to display.
 
