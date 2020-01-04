@@ -33,11 +33,15 @@ First of all, check you have Python with version >= 3 and PHP
 
 Then `git clone https://github.com/oToToT/JudgeGirl-Scoreboard.git`, now those source code will be cloned into `JudgeGirl-Scoreboard`.
 
+Run `pip install -r requirements.txt` to install dependencies for those python scripts.
+
 Edit `URL_BASE` to the url of your website and `TMP_PATH` to the path which could store a temp file in  `config.example.php` and rename it to `config.php` (notice that a `/` behind `TMP_PATH` is important).
 
 To customize display name, you should modify `student_info.example.php` which stores a mapping from uid to what you want to display.
 
 After that, you should rename it to `student_info.php`.
+
+Now, you could enjoy the fancy scoreboard of JudgeGirl.
 
 ## Special Thanks ##
 

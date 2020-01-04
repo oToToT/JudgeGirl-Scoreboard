@@ -1,2 +1,5 @@
 student_info.php
 config.php
+
+__pycache__/
+venv/
