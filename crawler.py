@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-import requests, sys, json
+import requests
+import sys
+import json
+import argparse
 
 def get_submissions(cid):
     """
-    get submisisions from judge girl
+    get submisisions from JudgeGirl
     """
     url = f'https://judgegirl.csie.org/api/submission?cid={cid}&limit=20'
     id_st = set()
@@ -23,7 +26,7 @@ def get_submissions(cid):
     return data
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("usage: ./crawler.py CID")
-    else:
-        print(json.dumps(get_submissions(sys.argv[1])[::-1]))
+    parser = argparse.ArgumentParser(description='Crawl submissions from JudgeGirl as JSON')
+    parser.add_argument('CID', type=int, help='Contest ID of JudgeGirl')
+    args = parser.parse_args()
+    print(json.dumps(get_submissions(args.CID)[::-1]))
