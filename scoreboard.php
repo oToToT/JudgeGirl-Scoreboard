@@ -75,54 +75,56 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
             </div>
         </div>
     </div>
-    <table class="ts horizontal scrollable sortable selectable single line celled table" id="scoreboard">
-        <thead>
-            <tr>
-                <th class="one wide">#</th>
-                <th class="two wide" v-on:click="sortBy('uid')" v-bind:class="{sorted: sorting.key=='uid', ascending: sorting.key=='uid'&&sorting.state==1, descending: sorting.key=='uid'&&sorting.state==-1}">User</th>
-                <th class="two wide" v-on:click="sortBy('last')" v-bind:class="{sorted: sorting.key=='last', ascending: sorting.key=='last'&&sorting.state==1, descending: sorting.key=='last'&&sorting.state==-1}">Last Submission</th>
-                <th class="one wide" v-on:click="sortBy('trials')" v-bind:class="{sorted: sorting.key=='trials', ascending: sorting.key=='trials'&&sorting.state==1, descending: sorting.key=='trials'&&sorting.state==-1}">Trials</th>
-                <th class="one wide" v-on:click="sortBy('score')" v-bind:class="{sorted: sorting.key=='score', ascending: sorting.key=='score'&&sorting.state==1, descending: sorting.key=='score'&&sorting.state==-1}">Total Score</th>
-                <th class="center aligned" v-for="(problem,index) in problems" v-on:click="sortBy(index)" v-bind:class="{sorted: sorting.key==index, ascending: sorting.key==index&&sorting.state==1, descending: sorting.key==index&&sorting.state==-1}">{{problem.name}} ({{problem.ac}}/{{problem.total}})</th>
-            </tr>
-        </thead>
-        <tbody>
-            <template v-for="(user, index) in users">
+    <div class="horizontal scrollable table">
+        <table class="ts sortable selectable single line celled table" id="scoreboard">
+            <thead>
                 <tr>
-                    <td>{{index+1}}</td>
-                    <td class='clickable' v-on:click='submissionDetail(user.uid)'>{{user.uid}}</td>
-                    <td>{{user.last.getHours()}}:{{String(user.last.getMinutes()).padStart(2, '0')}}:{{String(user.last.getSeconds()).padStart(2, '0')}}</td>
-                    <td>{{user.trials}}</td>
-                    <td>{{user.score}}</td>
-                    <template v-for="(data, pid) in user.scores">
-                        <td class="center aligned clickable" v-bind:class="{positive: data.type==3, error: data.type==1}" v-on:click='submissionDetail(user.uid, pid)'>{{data.score}}</td>
-                    </template>
+                    <th class="one wide">#</th>
+                    <th class="two wide" v-on:click="sortBy('uid')" v-bind:class="{sorted: sorting.key=='uid', ascending: sorting.key=='uid'&&sorting.state==1, descending: sorting.key=='uid'&&sorting.state==-1}">User</th>
+                    <th class="two wide" v-on:click="sortBy('last')" v-bind:class="{sorted: sorting.key=='last', ascending: sorting.key=='last'&&sorting.state==1, descending: sorting.key=='last'&&sorting.state==-1}">Last Submission</th>
+                    <th class="one wide" v-on:click="sortBy('trials')" v-bind:class="{sorted: sorting.key=='trials', ascending: sorting.key=='trials'&&sorting.state==1, descending: sorting.key=='trials'&&sorting.state==-1}">Trials</th>
+                    <th class="one wide" v-on:click="sortBy('score')" v-bind:class="{sorted: sorting.key=='score', ascending: sorting.key=='score'&&sorting.state==1, descending: sorting.key=='score'&&sorting.state==-1}">Total Score</th>
+                    <th class="center aligned" v-for="(problem,index) in problems" v-on:click="sortBy(index)" v-bind:class="{sorted: sorting.key==index, ascending: sorting.key==index&&sorting.state==1, descending: sorting.key==index&&sorting.state==-1}">{{problem.name}} ({{problem.ac}}/{{problem.total}})</th>
                 </tr>
-            </template>
-        </tbody>
-        <tfoot>
-            <tr v-if="users.length!=0">
-                <th class="right aligned" colspan="5">Average Trials to AC / Average Score / Number of AC Users</th>
-                <th class="center aligned" v-for="problem in problems">{{problem.ac_users == 0 ? "No AC" : Math.ceil(problem.ac_trials/problem.ac_users*100)/100}} / {{Math.ceil(problem.total_score/users.length*100)/100}} / {{problem.ac_users}}</th>
-            </tr>
-            <tr v-else="v-else">
-                <th class="center aligned" colspan="5">No Submissions!</th>
-            </tr>
-        </tfoot>
-    </table>
+            </thead>
+            <tbody>
+                <template v-for="(user, index) in users">
+                    <tr>
+                        <td>{{index+1}}</td>
+                        <td class='clickable' v-on:click='submissionDetail(user.uid)'>{{user.uid}}</td>
+                        <td>{{user.last.getHours()}}:{{String(user.last.getMinutes()).padStart(2, '0')}}:{{String(user.last.getSeconds()).padStart(2, '0')}}</td>
+                        <td>{{user.trials}}</td>
+                        <td>{{user.score}}</td>
+                        <template v-for="(data, pid) in user.scores">
+                            <td class="center aligned clickable" v-bind:class="{positive: data.type==3, error: data.type==1}" v-on:click='submissionDetail(user.uid, pid)'>{{data.score}}</td>
+                        </template>
+                    </tr>
+                </template>
+            </tbody>
+            <tfoot>
+                <tr v-if="users.length!=0">
+                    <th class="right aligned" colspan="5">Average Trials to AC / Average Score / Number of AC Users</th>
+                    <th class="center aligned" v-for="problem in problems">{{problem.ac_users == 0 ? "No AC" : Math.ceil(problem.ac_trials/problem.ac_users*100)/100}} / {{Math.ceil(problem.total_score/users.length*100)/100}} / {{problem.ac_users}}</th>
+                </tr>
+                <tr v-else="v-else">
+                    <th class="center aligned" colspan="5">No Submissions!</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
     <div class="ts modals dimmer">
         <dialog id="sDetail" class="ts closable modal">
             <i class="close icon"></i>
             <div class="ts header">
                 Submission Detail for {{username}}{{problem_name === ''?'':"'s "+problem_name}}
             </div>
-            <div class="content">
-                <table class="ts horizontal scrollable celled table">
+            <div class="content horizontal scrollable">
+                <table class="ts celled table">
                     <thead>
                         <tr>
                             <th>Problem Name</th>
                             <th>Submission ID</th>
-                            <th class="one wide">Result</th>
+                            <th>Result</th>
                             <th>Score</th>
                             <th>Submit Time</th>
                             <th>Time</th>

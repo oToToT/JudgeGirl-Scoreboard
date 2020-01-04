@@ -13,7 +13,7 @@
 .clickable {
     cursor: pointer;
 }
-.horizontal.scrollable.table {
+.horizontal.scrollable {
     display: block;
     overflow-x: auto;
 }
