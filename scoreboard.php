@@ -96,7 +96,7 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
                         <td>{{user.trials}}</td>
                         <td>{{user.score}}</td>
                         <template v-for="(data, pid) in user.scores">
-                            <td class="center aligned clickable" v-bind:class="{positive: data.type==3, error: data.type==1}" v-on:click='submissionDetail(user.uid, pid)'>{{data.score}}</td>
+                            <td class="center aligned" v-bind:class="{positive: data.type==3, error: data.type==1, clickable: data.type!=0}" v-on:click='submissionDetail(user.uid, pid)'>{{data.score}}</td>
                         </template>
                     </tr>
                 </template>

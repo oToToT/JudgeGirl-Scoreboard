@@ -13,12 +13,14 @@ function sort_user_by_last($a, $b) {
 }
 
 function crawl_submissions($cid) {
-    // call crawler.py to crawl submission
-    $submissions = json_decode(exec('python3 crawler.py '.escapeshellarg($cid)));
+    // call crawler.py to crawl submissions
+    return json_decode(exec('python3 crawler.py '.escapeshellarg($cid)));
+}
 
-    $res2text = ['Running', 'CE', 'OLE', 'MLE', 'RE', 'TLE', 'WA', 'AC', 'Uploading', 'PE'];
-
+function process_submissions($submissions) {
+    // process submissions
     // initiallize some variable to analyze submissions
+    $res2text = ['Running', 'CE', 'OLE', 'MLE', 'RE', 'TLE', 'WA', 'AC', 'Uploading', 'PE'];
     $trials = array(); // statistics for each problem's trial count
     $problems = array(); // data for each problem
     $users = array(); // some user information
@@ -143,7 +145,7 @@ $LOCK_FILE = fopen($LOCK_FILENAME, 'c+');
 // check already in use
 if(flock($LOCK_FILE, LOCK_EX | LOCK_NB)){ 
     // update data if file is no locked
-    $result = crawl_submissions($_GET['cid']);
+    $result = process_submissions(crawl_submissions($_GET['cid']));
     // only cached crawled and processed data to avoid privilege escalation
     fwrite($LOCK_FILE, json_encode($result));
     ftruncate($LOCK_FILE, ftell($LOCK_FILE));
