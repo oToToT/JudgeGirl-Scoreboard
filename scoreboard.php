@@ -122,7 +122,7 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
                         <tr>
                             <th>Problem Name</th>
                             <th>Submission ID</th>
-                            <th>Result</th>
+                            <th class="one wide">Result</th>
                             <th>Score</th>
                             <th>Submit Time</th>
                             <th>Time</th>
