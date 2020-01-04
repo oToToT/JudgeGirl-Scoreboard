@@ -10,8 +10,12 @@
 .ts.running.statistics .statistic>.value, .ts.statistics .running.statistic>.value, .ts.running.statistic>.value {
     color: #000000;
 }
-.clickable{
+.clickable {
     cursor: pointer;
+}
+.horizontal.scrollable.table {
+    display: block;
+    overflow-x: auto;
 }
 .ts.table tr.tle:not(.indicated), .ts.table td.tle:not(.indicated) {
     color: #9b00b7 !important;

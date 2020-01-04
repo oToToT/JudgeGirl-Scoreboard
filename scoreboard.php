@@ -75,7 +75,7 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
             </div>
         </div>
     </div>
-    <table class="ts sortable selectable single line celled table" id="scoreboard">
+    <table class="ts horizontal scrollable sortable selectable single line celled table" id="scoreboard">
         <thead>
             <tr>
                 <th>#</th>
@@ -117,7 +117,7 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
                 Submission Detail for {{username}}{{problem_name === ''?'':"'s "+problem_name}}
             </div>
             <div class="content">
-                <table class="ts celled table">
+                <table class="ts horizontal scrollable celled table">
                     <thead>
                         <tr>
                             <th>Problem Name</th>
