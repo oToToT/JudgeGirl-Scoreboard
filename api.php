@@ -62,10 +62,6 @@ function crawl_submissions($cid) {
             }
         }
         // process total score for a problem
-        if (!$problems[$submission->pid]['total_users'])
-            $problems[$submission->pid]['total_users'] = array();
-        if (!in_array($submission->uid, $problems[$submission->pid]['total_users'], true))
-            array_push($problems[$submission->pid]['total_users'], $submission->uid);
         $problems[$submission->pid]['total_score'] -= $users[$submission->uid]['scores'][$submission->pid]['score'];
         // process user's data
         $users[$submission->uid]['uid'] = $submission->lgn;
