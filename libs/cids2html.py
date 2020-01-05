@@ -378,7 +378,7 @@ def parse_submissions(submissions):
 def html_to_file(cids, ou):
     co.init()
     print(co.Style.BRIGHT + 'Ready to crawl ' + co.Fore.RED + f'{len(cids)}' + co.Fore.RESET + ' contest(s)' + co.Style.RESET_ALL)
-    submissions = sum(map(get_submissions, cids), [])
+    submissions = sum(map(get_submissions, cids), [])[::-1]
     print(co.Style.BRIGHT + 'total submission(s): ' + co.Fore.MAGENTA + f'{len(submissions)}' + co.Style.RESET_ALL)
     
     parsed = parse_submissions(submissions)

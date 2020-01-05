@@ -47,7 +47,7 @@ After that, you should rename it to `student_info.php`.
 
 Now, you could enjoy the fancy scoreboard of JudgeGirl.
 
-To modify the statistics page, you should go to `stat/` and add some folder like `2019-all` with a `config.json` inside it.
+To modify the statistics page, you should go to `stat/` and add some folder like `2019-overall` with a `config.json` inside it.
 
 Then, run `python libs/gen_stat.py` to generate static html files. (Notice that you can't customize names in statistics page.)
 
