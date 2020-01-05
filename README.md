@@ -27,6 +27,10 @@ We use [Tocas UI](https://github.com/TeaMeow/TocasUI) to displayed our scoreboar
 
 You can change the display name (e.g. add users' name after his uid) simply.
 
+- A static statistics page
+
+By setting some config, you could generate some staic statistics page to overview contests.
+
 ## Usage ##
 
 First of all, check you have Python with version >= 3 and PHP
@@ -42,6 +46,10 @@ To customize display name, you should modify `student_info.example.php` which st
 After that, you should rename it to `student_info.php`.
 
 Now, you could enjoy the fancy scoreboard of JudgeGirl.
+
+To modify the statistics page, you should go to `stat/` and add some folder like `2019-all` with a `config.json` inside it.
+
+Then, run `python libs/gen_stat.py` to generate static html files. (Notice that you can't customize names in statistics page.)
 
 ## Special Thanks ##
 

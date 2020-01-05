@@ -1,0 +1,18 @@
+.navmenu {
+    font-size: 16px !important;
+}
+.clickable {
+    cursor: pointer;
+}
+.navmenu a.item {
+  color: #aaa !important;
+}
+.navmenu a.header.item {
+  color: #fff !important;
+}
+.navmenu a.header.item:hover {
+  color: #efefef !important;
+}
+.navmenu a.item:hover {
+  color: #8f8f8f !important;
+}

@@ -1,6 +1,18 @@
 .navmenu {
     font-size: 16px !important;
 }
+.navmenu a.item {
+  color: #aaa !important;
+}
+.navmenu a.header.item {
+  color: #fff !important;
+}
+.navmenu a.header.item:hover {
+  color: #efefef !important;
+}
+.navmenu a.item:hover {
+  color: #8f8f8f !important;
+}
 .ts.tle.statistics .statistic>.value, .ts.statistics .tle.statistic>.value, .ts.tle.statistic>.value {
     color: #9b00b7;
 }

@@ -31,8 +31,9 @@ if(!filter_var($_GET['end'], FILTER_VALIDATE_INT)){
         <div class="ts text loader">載入中</div>
     </div>
     <div class="ts inverted fluid top attached link basic menu navmenu">
-        <div class="ts narrow container"><a class="item router-link-active" href="./">JudgeGirl Scoreboard</a>
-            <div class="right menu"><a class="item" href="https://github.com/oToToT/JudgeGirl-Scoreboard">Github</a></div>
+        <div class="ts narrow container"><a class="item header" href="./">JudgeGirl Scoreboard</a>
+            <a class="item" href="./stat/">Statistics</a>
+            <div class="right menu"><a class="item header" href="https://github.com/oToToT/JudgeGirl-Scoreboard">Github</a></div>
         </div>
     </div>
     <div class="ts fluid vertically very padded heading borderless slate">
