@@ -3,13 +3,14 @@ import requests
 import sys
 import json
 import argparse
+import os
 from urllib.parse import urljoin
 
 def get_submissions(cid):
     """
     get submisisions from JudgeGirl
     """
-    config = json.load(open('../config.json'))
+    config = json.load(open(os.path.join(os.path.dirname(__file__), '../config.json')))
     url = urljoin(config['JUDGEGIRL_URL'], f'/api/submission?cid={cid}&limit=20')
     id_st = set()
     data = []
