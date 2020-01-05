@@ -20,7 +20,7 @@ function cid_to_url($cid) {
             <a class="item header" href="../">JudgeGirl Scoreboard</a>
             <a class="item" href='./'>Statistics</a>
             <div class="right menu">
-                <a class="item" href="https://github.com/oToToT/JudgeGirl-Scoreboard">Github</a>
+                <a class="item header" href="https://github.com/oToToT/JudgeGirl-Scoreboard">Github</a>
             </div>
         </div>
     </div>

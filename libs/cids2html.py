@@ -81,7 +81,7 @@ html = '''<!DOCTYPE html>
 </head>
 <body>
 <div class="ts inverted fluid top attached link basic menu navmenu">
-  <div class="ts narrow container"><a class="header item" href="./">JudgeGirl Scoreboard</a><a class="item" href="./stat.html">Statistics</a>
+  <div class="ts narrow container"><a class="header item" href="../../">JudgeGirl Scoreboard</a><a class="item" href="../">Statistics</a>
     <div class="right menu"><a class="header item" href="https://github.com/oToToT/JudgeGirl-Scoreboard">Github</a></div>
   </div>
 </div>
