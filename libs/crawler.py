@@ -9,7 +9,7 @@ def get_submissions(cid):
     """
     get submisisions from JudgeGirl
     """
-    config = json.load(open('config.json'))
+    config = json.load(open('../config.json'))
     url = urljoin(config['JUDGEGIRL_URL'], f'/api/submission?cid={cid}&limit=20')
     id_st = set()
     data = []
