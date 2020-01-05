@@ -1,5 +1,6 @@
 student_info.php
 config.json
+stat/*/index.html
 
 __pycache__/
 venv/
