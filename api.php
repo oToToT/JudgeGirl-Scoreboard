@@ -14,7 +14,7 @@ function sort_user_by_last($a, $b) {
 
 function crawl_submissions($cid) {
     // call crawler.py to crawl submissions
-    return json_decode(exec('python3 crawler.py '.escapeshellarg($cid)));
+    return json_decode(exec('python3 libs/crawler.py '.escapeshellarg($cid)));
 }
 
 function process_submissions($submissions) {
